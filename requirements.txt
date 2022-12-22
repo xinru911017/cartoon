@@ -1,0 +1,5 @@
+flask
+firebase_admin
+bs4
+make_response
+jsonify
