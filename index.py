@@ -48,15 +48,15 @@ def webhook():
         rate = "每週二"
     info = "您選擇的星期天數是：" + rate + "，相關動漫：\n"
 
-    collection_ref = db.collection("動漫卡片")
-    docs = collection_ref.get()
-    result = ""
-    for doc in docs:
-        dict = doc.to_dict()
-        if rate in dict["rate"]:
-            result += "片名：" + dict["title"] + "\n"
-            result += "介紹：" + dict["link"] + "\n\n"
-    info += result
+    # collection_ref = db.collection("動漫卡片")
+    # docs = collection_ref.get()
+    # result = ""
+    # for doc in docs:
+    #     dict = doc.to_dict()
+    #     if rate in dict["rate"]:
+    #         result += "片名：" + dict["title"] + "\n"
+    #         result += "介紹：" + dict["link"] + "\n\n"
+    # info += result
   return make_response(jsonify({"fulfillmentText": info}))
 
 @app.route("/")
