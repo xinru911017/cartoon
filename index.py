@@ -43,17 +43,17 @@ def webhook():
   req = request.get_json(force=True)
   action =  req.get("queryResult").get("action")
   if (action == "cartoonChoice"):
-    rate =  req.get("queryResult").get("parameters").get("date")
-    info = "您選擇的星期天數是：" + rate + "，相關動漫：\n"
+    date =  req.get("queryResult").get("parameters").get("date")
+    info = "您選擇的星期天數是：" + date + "，相關動漫：\n"
 
     collection_ref = db.collection("動漫卡片")
     docs = collection_ref.get()
     result = ""
     for doc in docs:
         dict = doc.to_dict()
-        if rate in dict["date"]:
-            result += "片名：" + dict["title"] + "\n"
-            result += "介紹：" + dict["link"] + "\n\n"
+        if date in dict["date"]:
+          result += "片名：" + dict["title"] + "\n"
+          result += "介紹：" + dict["link"] + "\n\n"
     info += result
   return make_response(jsonify({"fulfillmentText": info}))
 
