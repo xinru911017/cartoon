@@ -41,8 +41,8 @@ def webhook():
   req = request.get_json(force=True)
   action =  req.get("queryResult").get("action")
   if (action == "cartoonChoice"):
-      rate =  req.get("queryResult").get("parameters").get("rate")
-      info = "您選擇的電影分級是：" + rate
+      date =  req.get("queryResult").get("parameters").get("date")
+      info = "您選擇的星期數是：" + date
   return make_response(jsonify({"fulfillmentText": info}))
 
 @app.route("/")
