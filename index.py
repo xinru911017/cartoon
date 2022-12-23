@@ -24,12 +24,14 @@ def cartoon():
     picture = item.find("img").get("src").replace(" ", "")
     title = item.find("div", class_="anime_name").text
     today = item.find("div", class_="day").text
-    today = "每週" + item.find("div", class_="day").text + "\t" + item.find("div", class_="time").text
+    today = "每週" + item.find("div", class_="day").text  
+    time =  item.find("div", class_="time").text
     link = "https://acgsecrets.hk/bangumi/202210" +item.find("a").get("href").replace("/","")
     doc = {
       "title": title,
       "picture": picture,
       "today": today,
+      "time" : time,
       "link": link
     }
 
@@ -42,21 +44,17 @@ def webhook():
   action =  req.get("queryResult").get("action")
   if (action == "cartoonChoice"):
     rate =  req.get("queryResult").get("parameters").get("date")
-    if (rate == "一"):
-        rate = "每週一"
-    elif (rate == "二"):
-        rate = "每週二"
     info = "您選擇的星期天數是：" + rate + "，相關動漫：\n"
 
-    # collection_ref = db.collection("動漫卡片")
-    # docs = collection_ref.get()
-    # result = ""
-    # for doc in docs:
-    #     dict = doc.to_dict()
-    #     if rate in dict["rate"]:
-    #         result += "片名：" + dict["title"] + "\n"
-    #         result += "介紹：" + dict["link"] + "\n\n"
-    # info += result
+    collection_ref = db.collection("動漫卡片")
+    docs = collection_ref.get()
+    result = ""
+    for doc in docs:
+        dict = doc.to_dict()
+        if rate in dict["date"]:
+            result += "片名：" + dict["title"] + "\n"
+            result += "介紹：" + dict["link"] + "\n\n"
+    info += result
   return make_response(jsonify({"fulfillmentText": info}))
 
 @app.route("/")
@@ -65,5 +63,5 @@ def index():
     homepage += "<a href=/webhook target = _blank>對話機器人</a><br>"
     return homepage
 
-# if __name__ == "__main__":
-#     app.run()
+if __name__ == "__main__":
+    app.run()
