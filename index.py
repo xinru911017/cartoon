@@ -44,14 +44,14 @@ def webhook():
   action =  req.get("queryResult").get("action")
   if (action == "cartoonChoice"):
     date =  req.get("queryResult").get("parameters").get("date")
-    info = "您選擇的星期天數是：" + date + "，相關動漫：\n"
+    info = "您選擇的天數是：" + date + "，相關動漫：\n"
 
     collection_ref = db.collection("動漫卡片")
     docs = collection_ref.get()
     result = ""
     for doc in docs:
         dict = doc.to_dict()
-        if date in dict["date"]:
+        if date in dict["today"]:
           result += "片名：" + dict["title"] + "\n"
           result += "介紹：" + dict["link"] + "\n\n"
     info += result
