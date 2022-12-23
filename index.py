@@ -8,7 +8,7 @@ firebase_admin.initialize_app(cred)
 db = firestore.client()
 
 from flask import Flask, render_template, request, make_response, jsonify
-from datetime import datetime, timezone, timedelta
+
 app = Flask(__name__)
 
 @app.route("/cartoon")
@@ -38,11 +38,12 @@ def cartoon():
 
 @app.route("/webhook", methods=["POST"])
 def webhook():
-    req = request.get_json(force=True)
-    action =  req.get("queryResult").get("action")
-    msg =  req.get("queryResult").get("queryText")
-    info = "動作：" + action + "； 查詢內容：" + msg
-    return make_response(jsonify({"fulfillmentText": info}))
+  req = request.get_json(force=True)
+  action =  req.get("queryResult").get("action")
+  # if (action == "cartoonChoice"):
+  #     rate =  req.get("queryResult").get("parameters").get("rate")
+  #     info = "您選擇的電影分級是：" + rate
+  return make_response(jsonify({"fulfillmentText": info}))
 
 @app.route("/")
 def index():
