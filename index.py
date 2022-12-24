@@ -55,8 +55,6 @@ def webhook():
           result += "👀動漫片名：" + dict["title"] + "\n"
           result += "✍️詳細介紹：" + dict["link"] + "\n\n"
           result += "⌚播放時間：" + dict["today"] + "\t" + dict["time"] + "\n\n"
-        else :
-          result += "很抱歉，今日沒有❌相關動漫會放映喔～"
     info += result
   elif (action == "MovieDetail"): 
         cond =  req.get("queryResult").get("parameters").get("name")
