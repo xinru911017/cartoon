@@ -44,7 +44,7 @@ def webhook():
   action =  req.get("queryResult").get("action")
   if (action == "cartoonChoice"):
     date =  req.get("queryResult").get("parameters").get("date")
-    info = "您選擇的天數是：" + date + "\n相關動漫資訊如下🔽🔽🔽：\n\n"
+    info = "您選擇的天數是：" + date + "\n🔽相關資訊🔽\n\n"
 
     collection_ref = db.collection("動漫卡片")
     docs = collection_ref.get()
@@ -54,12 +54,12 @@ def webhook():
         if date in dict["today"]:
           result += "👀動漫片名：" + dict["title"] + "\n"
           result += "✍️詳細介紹：" + dict["link"] + "\n"
-          result += "⌚播放時間：" + dict["today"] + "\t" + dict["time"] + "\n\n"
+          result += "⌚播放時間：" + dict["today"] + dict["time"] + "\n\n"
     info += result
   elif (action == "MovieDetail"): 
         cond =  req.get("queryResult").get("parameters").get("name")
         keyword =  req.get("queryResult").get("parameters").get("any")
-        info = "您要查詢動漫的" + cond + "關鍵字是：" + keyword + "\n\n"
+        info = "您要查詢的" + cond + "關鍵字是：" + keyword + "\n\n"
         if (cond == "片名"):
             collection_ref = db.collection("動漫卡片")
             docs = collection_ref.get()
