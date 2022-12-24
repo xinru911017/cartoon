@@ -61,19 +61,33 @@ def webhook():
         keyword =  req.get("queryResult").get("parameters").get("any")
         info = "您要查詢的" + cond + "關鍵字是：" + keyword + "\n\n"
         if (cond == "片名"):
-            collection_ref = db.collection("動漫卡片")
-            docs = collection_ref.get()
-            found = False
-            for doc in docs:
-                dict = doc.to_dict()
-                if keyword in dict["title"]:
-                    found = True 
-                    info += "👀片名：" + dict["title"] + "\n"
-                    info += "🖼️海報：" + dict["picture"] + "\n"
-                    info += "✍️詳細介紹：" + dict["link"] + "\n"
-                    info += "⌚播放時間：" + dict["today"] + dict["time"] + "\n"
-            if not found:
-                info += "很抱歉，目前沒有❌符合這個關鍵字的相關動漫喔～"
+          collection_ref = db.collection("動漫卡片")
+          docs = collection_ref.get()
+          found = False
+          for doc in docs:
+              dict = doc.to_dict()
+              if keyword in dict["title"]:
+                  found = True 
+                  info += "👀片名：" + dict["title"] + "\n"
+                  info += "🖼️海報：" + dict["picture"] + "\n"
+                  info += "✍️詳細介紹：" + dict["link"] + "\n"
+                  info += "⌚播放時間：" + dict["today"] + dict["time"] + "\n"
+          if not found:
+              info += "很抱歉，目前沒有❌符合這個關鍵字的相關動漫喔～"
+        elif (cond == "播放時間"):
+          collection_ref = db.collection("動漫卡片")
+          docs = collection_ref.get()
+          found = False
+          for doc in docs:
+              dict = doc.to_dict()
+              if keyword in dict["today"] or dict["time"]:
+                  found = True 
+                  info += "👀片名：" + dict["title"] + "\n"
+                  info += "🖼️海報：" + dict["picture"] + "\n"
+                  info += "✍️詳細介紹：" + dict["link"] + "\n"
+                  info += "⌚播放時間：" + dict["today"] + dict["time"] + "\n"
+          if not found:
+              info += "很抱歉，目前沒有❌符合這個關鍵字的相關動漫喔～"
   return make_response(jsonify({"fulfillmentText": info}))
 
 @app.route("/")
