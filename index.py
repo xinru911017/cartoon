@@ -80,7 +80,7 @@ def webhook():
           found = False
           for doc in docs:
               dict = doc.to_dict()
-              if keyword in dict["today"] or dict["time"]:
+              if keyword in dict["today"]:
                   found = True 
                   info += "👀片名：" + dict["title"] + "\n"
                   info += "🖼️海報：" + dict["picture"] + "\n"
