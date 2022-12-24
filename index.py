@@ -44,7 +44,7 @@ def webhook():
   action =  req.get("queryResult").get("action")
   if (action == "cartoonChoice"):
     date =  req.get("queryResult").get("parameters").get("date")
-    info = "您選擇的天數是：" + date + "，相關動漫：\n"
+    info = "您選擇的天數是：" + date + "\n相關動漫資訊如下🔽🔽🔽：\n\n"
 
     collection_ref = db.collection("動漫卡片")
     docs = collection_ref.get()
@@ -52,13 +52,16 @@ def webhook():
     for doc in docs:
         dict = doc.to_dict()
         if date in dict["today"]:
-          result += "片名：" + dict["title"] + "\n"
-          result += "介紹：" + dict["link"] + "\n\n"
+          result += "👀動漫片名：" + dict["title"] + "\n"
+          result += "✍️詳細介紹：" + dict["link"] + "\n\n"
+          result += "⌚播放時間：" + dict["today"] + "\t" + dict["time"] + "\n\n"
+        else :
+          result += "很抱歉，今日沒有❌相關動漫會放映喔～"
     info += result
   elif (action == "MovieDetail"): 
         cond =  req.get("queryResult").get("parameters").get("name")
         keyword =  req.get("queryResult").get("parameters").get("any")
-        info = "您要查詢動漫的" + cond + "，關鍵字是：" + keyword + "\n\n"
+        info = "您要查詢動漫的" + cond + "關鍵字是：" + keyword + "\n"
         if (cond == "片名"):
             collection_ref = db.collection("動漫卡片")
             docs = collection_ref.get()
@@ -67,12 +70,12 @@ def webhook():
                 dict = doc.to_dict()
                 if keyword in dict["title"]:
                     found = True 
-                    info += "片名：" + dict["title"] + "\n"
-                    info += "海報：" + dict["picture"] + "\n"
-                    info += "影片介紹：" + dict["link"] + "\n"
-                    info += "播放時間：" + dict["today"] + "\t" + dict["time"] + "\n\n"
+                    info += "👀片名：" + dict["title"] + "\n"
+                    info += "🖼️海報：" + dict["picture"] + "\n"
+                    info += "✍️詳細介紹：" + dict["link"] + "\n"
+                    info += "⌚播放時間：" + dict["today"] + "\t" + dict["time"] + "\n"
             if not found:
-                info += "很抱歉，目前無符合這個關鍵字的相關動漫喔～"
+                info += "很抱歉，目前沒有❌符合這個關鍵字的相關動漫喔～"
   return make_response(jsonify({"fulfillmentText": info}))
 
 @app.route("/")
