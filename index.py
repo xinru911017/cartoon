@@ -71,7 +71,7 @@ def webhook():
                   info += "👀片名：" + dict["title"] + "\n"
                   info += "🖼️海報：" + dict["picture"] + "\n"
                   info += "✍️詳細介紹：" + dict["link"] + "\n"
-                  info += "⌚播放時間：" + dict["today"] + dict["time"] + "\n"
+                  info += "⌚播放時間：" + dict["today"] + dict["time"] + "\n\n"
           if not found:
               info += "很抱歉，目前沒有❌符合這個關鍵字的相關動漫喔～"
         elif (cond == "播放時間"):
@@ -85,7 +85,7 @@ def webhook():
                   info += "👀片名：" + dict["title"] + "\n"
                   info += "🖼️海報：" + dict["picture"] + "\n"
                   info += "✍️詳細介紹：" + dict["link"] + "\n"
-                  info += "⌚播放時間：" + dict["today"] + dict["time"] + "\n"
+                  info += "⌚播放時間：" + dict["today"] + dict["time"] + "\n\n"
           if not found:
               info += "很抱歉，目前沒有❌符合這個關鍵字的相關動漫喔～"
   return make_response(jsonify({"fulfillmentText": info}))
